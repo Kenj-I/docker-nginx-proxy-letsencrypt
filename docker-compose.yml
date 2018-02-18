@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  nginx_proxy:
+    image: jwilder/nginx-proxy
+    ports:
+        - "80:80"
+    networks:
+        - external_nginx_proxy
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    logging:
+        options:
+            max-size: "1m"
+            max-file: "1"
+    # restart: always
+
+networks:
+    external_nginx_proxy:
+        external:
+            name: proxy_net
