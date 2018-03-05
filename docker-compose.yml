@@ -8,6 +8,7 @@ services:
     networks:
         - external_nginx_proxy
     volumes:
+        - ./server.conf:/etc/nginx/conf.d/server.conf:ro
         - /var/run/docker.sock:/tmp/docker.sock:ro
     logging:
         options:
