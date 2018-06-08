@@ -2,14 +2,17 @@ version: '3'
 
 services:
   nginx_proxy:
+    container_name: nginx_proxy
     image: jwilder/nginx-proxy
     ports:
         - "80:80"
+        - "443:443"
     networks:
         - external_nginx_proxy
     volumes:
         - ./server.conf:/etc/nginx/conf.d/server.conf:ro
         - /var/run/docker.sock:/tmp/docker.sock:ro
+        - ./certs:/etc/nginx/certs
     logging:
         options:
             max-size: "1m"
@@ -18,5 +21,4 @@ services:
 
 networks:
     external_nginx_proxy:
-        external:
-            name: proxy_net
+        external: true
