@@ -12,12 +12,30 @@ services:
     volumes:
         - ./server.conf:/etc/nginx/conf.d/server.conf:ro
         - /var/run/docker.sock:/tmp/docker.sock:ro
-        - ./certs:/etc/nginx/certs
+        - certs:/etc/nginx/certs
+        - html:/usr/share/nginx/html
     logging:
         options:
-            max-size: "1m"
-            max-file: "1"
-    # restart: always
+            max-size: "5m"
+            max-file: "10"
+    restart: always
+
+  letsencrypt:
+    container_name: letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+        - certs:/etc/nginx/certs
+        - vhost:/etc/nginx/vhost.d
+        - html:/usr/share/nginx/html
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+
+
+volumes:
+    conf:
+    vhost:
+    html:
+    certs:
 
 networks:
     external_nginx_proxy:
