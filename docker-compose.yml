@@ -24,6 +24,8 @@ services:
   letsencrypt:
     container_name: letsencrypt
     image: jrcs/letsencrypt-nginx-proxy-companion
+    environment:
+        - NGINX_PROXY_CONTAINER=nginx_proxy
     volumes:
         - certs:/etc/nginx/certs
         - vhost:/etc/nginx/vhost.d
